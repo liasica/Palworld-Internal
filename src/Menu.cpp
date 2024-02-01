@@ -70,7 +70,7 @@ namespace DX11_Base
                 float cursorX = 0.f;
 
                 //�л�����һ��
-                ImGui::Checkbox("SpeedHack", &Config.IsSpeedHack);
+                ImGui::Checkbox("加速", &Config.IsSpeedHack);
                 if (Config.IsSpeedHack)
                 {
                     ImGui::SameLine();
@@ -84,7 +84,7 @@ namespace DX11_Base
                     ImGui::NewLine();
                 }
 
-                ImGui::Checkbox("AttackHack", &Config.IsAttackModiler);
+                ImGui::Checkbox("加攻", &Config.IsAttackModiler);
                 if (Config.IsAttackModiler)
                 {
                     ImGui::SameLine();
@@ -92,7 +92,7 @@ namespace DX11_Base
                     ImGui::SliderInt("##AttackModifilers", &Config.DamageUp, 0, 200000);
                 }
 
-                ImGui::Checkbox("DefenseHack", &Config.IsDefuseModiler);
+                ImGui::Checkbox("加防", &Config.IsDefuseModiler);
                 if (Config.IsDefuseModiler)
                 {
                     ImGui::SameLine();
@@ -100,14 +100,14 @@ namespace DX11_Base
                     ImGui::SliderInt("##defenseModifilers", &Config.DefuseUp, 0, 200000);
                 }
 
-                ImGui::Checkbox("Godmode", &Config.IsGodMode);
+                ImGui::Checkbox("最大血量", &Config.IsGodMode);
 
-                ImGui::Checkbox("InfStamina", &Config.IsInfStamina);
+                ImGui::Checkbox("无限耐力", &Config.IsInfStamina);
 
-                if (ImGui::Checkbox("InfAmmo", &Config.IsInfinAmmo))
+                if (ImGui::Checkbox("无限弹药", &Config.IsInfinAmmo))
                     SetInfiniteAmmo(Config.IsInfinAmmo);
 
-                if (ImGui::Checkbox("TELEPORT PALS TO XHAIR", &Config.IsTeleportAllToXhair) && !Config.IsTeleportAllToXhair)
+                if (ImGui::Checkbox("传送帕鲁到准星", &Config.IsTeleportAllToXhair) && !Config.IsTeleportAllToXhair)
                     Config.mDebugEntCapDistance = 10.f;
                 if (Config.IsTeleportAllToXhair)
                 {
@@ -116,7 +116,7 @@ namespace DX11_Base
                     ImGui::SliderFloat("##ENT_CAP_DISTANCE", &Config.mDebugEntCapDistance, 1.0f, 100.f, "%.0f", ImGuiSliderFlags_AlwaysClamp);
                 }
 
-                if (ImGui::Checkbox("DEATH AURA", &Config.IsDeathAura) && !Config.IsDeathAura)
+                if (ImGui::Checkbox("死亡光环", &Config.IsDeathAura) && !Config.IsDeathAura)
                 {
                     Config.mDeathAuraDistance = 10.0f;
                     Config.mDeathAuraAmount = 1;
@@ -131,10 +131,10 @@ namespace DX11_Base
                     ImGui::SliderInt("##AURA_DMG", &Config.mDeathAuraAmount, 1, 10, "%d", ImGuiSliderFlags_AlwaysClamp);
                 }
 
-                if (ImGui::Checkbox("Float Mode", &Config.IsToggledFly))
+                if (ImGui::Checkbox("飞行模式", &Config.IsToggledFly))
                     ExploitFly(Config.IsToggledFly);
 
-                if (ImGui::Checkbox("FullBright", &Config.IsFullbright))
+                if (ImGui::Checkbox("高亮模式", &Config.IsFullbright))
                     SetFullbright(Config.IsFullbright);
 
                 ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * .65);
@@ -157,13 +157,13 @@ namespace DX11_Base
                 ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * .3);
                 ImGui::InputInt("##ADD_TECH_POINTS", &inputTechPoints_buffer);
                 ImGui::SameLine();
-                if (ImGui::Button("TECH POINTS"))
+                if (ImGui::Button("科技点"))
                 {
                     AddTechPoints(inputTechPoints_buffer);
                     inputTechPoints_buffer = 1;
                 }
                 ImGui::SameLine();
-                if (ImGui::Button("ANCIENT TECH POINTS", ImVec2(ImGui::GetContentRegionAvail().x, 0)))
+                if (ImGui::Button("古代科技点", ImVec2(ImGui::GetContentRegionAvail().x, 0)))
                 {
                     AddAncientTechPoints(inputTechPoints_buffer);
                     inputTechPoints_buffer = 1;
@@ -184,22 +184,22 @@ namespace DX11_Base
 
                 //creadit 
                 //ImGui::Checkbox("PalIsMonster", &Config.IsMonster);
-                ImGui::InputText("Item Name", Config.ItemName,sizeof(Config.ItemName));
-                ImGui::InputInt("Item Num", &Config.Item);
+                ImGui::InputText("物品名称", Config.ItemName,sizeof(Config.ItemName));
+                ImGui::InputInt("物品数量", &Config.Item);
                 ImGui::SameLine();
-                if (ImGui::Button("Give item", ImVec2(ImGui::GetContentRegionAvail().x, 20)))
+                if (ImGui::Button("生成物品", ImVec2(ImGui::GetContentRegionAvail().x, 20)))
                 {
                     AddItemToInventoryByName(std::string(Config.ItemName), Config.Item);
                     g_Console->printdbg("\n\n[+] ItemName: %s [+]\n\n", Console::Colors::green, Config.ItemName);
                 }
 
-                ImGui::InputInt("Slot to modify (start 0):", &Config.AddItemSlot);
-                ImGui::InputInt("Multiple of how much:", &Config.AddItemCount);
+                ImGui::InputInt("物品栏插槽（从0开始）:", &Config.AddItemSlot);
+                ImGui::InputInt("叠加数量:", &Config.AddItemCount);
                 
-                if (ImGui::Button("Give items from slot", ImVec2(ImGui::GetContentRegionAvail().x, 20)))
+                if (ImGui::Button("修改物品栏物品数量", ImVec2(ImGui::GetContentRegionAvail().x, 20)))
                     IncrementInventoryItemCountByIndex(Config.AddItemCount, Config.AddItemSlot);
                 
-                if (ImGui::Button("Unlock All Effigies", ImVec2(ImGui::GetContentRegionAvail().x, 20)))
+                if (ImGui::Button("解锁所有雕像", ImVec2(ImGui::GetContentRegionAvail().x, 20)))
                     UnlockAllEffigies();
 
 
@@ -218,13 +218,13 @@ namespace DX11_Base
                     }
                 }*/
 
-                if (ImGui::Button("GodHealth", ImVec2(ImGui::GetContentRegionAvail().x - 3, 20)))
+                if (ImGui::Button("无敌血量", ImVec2(ImGui::GetContentRegionAvail().x - 3, 20)))
                     ReviveLocalPlayer();
 
                 //Creadit WoodgamerHD
-                ImGui::InputInt("EXP:", &Config.EXP);
+                ImGui::InputInt("经验:", &Config.EXP);
                 ImGui::SameLine();
-                if (ImGui::Button("Give exp", ImVec2(ImGui::GetContentRegionAvail().x, 20)))
+                if (ImGui::Button("获取经验", ImVec2(ImGui::GetContentRegionAvail().x, 20)))
                 GiveExperiencePoints(Config.EXP);
 
 
@@ -241,7 +241,7 @@ namespace DX11_Base
             ImGui::Spacing();
             ImGui::Separator();
             ImGui::Spacing();
-            if (ImGui::Button("UNHOOK DLL", ImVec2(ImGui::GetContentRegionAvail().x - 3, 20))) {
+            if (ImGui::Button("取消注入", ImVec2(ImGui::GetContentRegionAvail().x - 3, 20))) {
 #if DEBUG
                 g_Console->printdbg("\n\n[+] UNHOOK INITIALIZED [+]\n\n", Console::Colors::red);
 
@@ -259,7 +259,7 @@ namespace DX11_Base
 
                 //ImGui::Checkbox("IsItems", &Config.matchDbItems);
 
-                ImGui::InputText("Filter", Config.inputTextBuffer, sizeof(Config.inputTextBuffer), ImGuiInputTextFlags_CallbackCharFilter, InputTextCallback);
+                ImGui::InputText("查找", Config.inputTextBuffer, sizeof(Config.inputTextBuffer), ImGuiInputTextFlags_CallbackCharFilter, InputTextCallback);
 
                 Config.Update(Config.inputTextBuffer);
 
@@ -288,7 +288,7 @@ namespace DX11_Base
 
                 if (Config.gWorld)
                 {
-                    ImGui::Checkbox("filterPlayer", &Config.filterPlayer);
+                    ImGui::Checkbox("只有玩家", &Config.filterPlayer);
                     SDK::TArray<SDK::AActor*> T = Config.GetUWorld()->PersistentLevel->Actors;
                     for (int i = 0; i < T.Count(); i++)
                     {
@@ -338,13 +338,13 @@ namespace DX11_Base
                         ImGui::Text(name.ToString().c_str());
                         ImGui::SameLine();
                         ImGui::PushID(i);
-                        if (ImGui::Button("Kill"))
+                        if (ImGui::Button("杀死"))
                         {
                             if (T[i]->IsA(SDK::APalCharacter::StaticClass()))
                                 SendDamageToActor(Character, 99999999999);
                         }
                         ImGui::SameLine();
-                        if (ImGui::Button("TP"))
+                        if (ImGui::Button("传送"))
                         {
                             if (Config.GetPalPlayerCharacter() != NULL)
                             {
@@ -702,47 +702,47 @@ namespace DX11_Base
 
         if (ImGui::BeginTabBar("##tabs", ImGuiTabBarFlags_None))
         {
-            if (ImGui::BeginTabItem("Player"))
+            if (ImGui::BeginTabItem("玩家"))
             {
                 Tabs::TABPlayer();
                 ImGui::EndTabItem();
             }
-            if (ImGui::BeginTabItem("EXPLOIT"))
+            if (ImGui::BeginTabItem("漏洞"))
             {
                 Tabs::TABExploit();
                 ImGui::EndTabItem();
             }
-            if (ImGui::BeginTabItem("Database"))
+            if (ImGui::BeginTabItem("数据库"))
             {
                 Tabs::TABDatabase();
                 ImGui::EndTabItem();
             }
-            if (ImGui::BeginTabItem("Item Spawner"))
+            if (ImGui::BeginTabItem("物品生成"))
             {
                 Tabs::TABItemSpawner();
                 ImGui::EndTabItem();
             }
-            if (ImGui::BeginTabItem("Entity Manager"))
+            if (ImGui::BeginTabItem("实体管理"))
             {
                 Tabs::TABEntityManager();
                 ImGui::EndTabItem();
             }
-            if (ImGui::BeginTabItem("CONFIG"))
+            if (ImGui::BeginTabItem("配置"))
             {
                 Tabs::TABConfig();
                 ImGui::EndTabItem();
             }
-            if (Config.IsQuick && ImGui::BeginTabItem("Quick"))
+            if (Config.IsQuick && ImGui::BeginTabItem("快捷"))
             {
                 Tabs::TABQuick();
                 ImGui::EndTabItem();
             }
-            if (Config.bisOpenManager && ImGui::BeginTabItem("Entity Manager"))
+            if (Config.bisOpenManager && ImGui::BeginTabItem("实体管理"))
             {
                 Tabs::TABTeleportManager();
                 ImGui::EndTabItem();
             }
-            if (Config.bisTeleporter && ImGui::BeginTabItem("Teleport Manager"))
+            if (Config.bisTeleporter && ImGui::BeginTabItem("传送"))
             {
                 Tabs::TABTeleportManager();
                 ImGui::EndTabItem();
